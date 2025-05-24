@@ -1,0 +1,31 @@
+FROM python:3.10-slim
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    ccache \
+    git \
+    zip \
+    unzip \
+    openjdk-17-jdk \
+    python3-pip \
+    libncurses5 \
+    libstdc++6 \
+    libffi-dev \
+    libssl-dev \
+    libsqlite3-dev \
+    zlib1g-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libgl1-mesa-glx \
+    && apt-get clean
+
+# Install buildozer and Cython
+RUN pip install --no-cache-dir --upgrade pip setuptools cython
+RUN pip install --no-cache-dir buildozer
+
+# Set up working directory
+WORKDIR /home/user/app
+
+CMD ["buildozer", "--help"]
